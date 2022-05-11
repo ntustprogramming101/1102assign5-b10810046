@@ -454,7 +454,7 @@ void draw() {
     //   Call drawCaution() to draw caution sign
 
     drawCaution(getEnemyIndexByRow(playerRow+5));
-    println(getEnemyIndexByRow(playerRow+5));
+  //  println(getEnemyIndexByRow(playerRow+5));
 
 
     popMatrix();
