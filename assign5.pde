@@ -295,7 +295,7 @@ void draw() {
        && cabbageY[i] + SOIL_SIZE > playerY    // r1 top edge past r2 bottom
        && cabbageY[i] < playerY + SOIL_SIZE
        */
-      if (isHit(playerX, playerY, playerX + SOIL_SIZE, playerY + SOIL_SIZE, cabbageX[i], cabbageY[i], cabbageX[i] + SOIL_SIZE, cabbageY[i] + SOIL_SIZE)) { // r1 bottom edge past r2 top
+      if (isHit(playerX, playerY, playerX + SOIL_SIZE, playerY + SOIL_SIZE, cabbageX[i], cabbageY[i], cabbageX[i] + SOIL_SIZE, cabbageY[i] + SOIL_SIZE) && PLAYER_MAX_HEALTH > playerHealth) { // r1 bottom edge past r2 top
 
         playerHealth ++;
         cabbageX[i] = cabbageY[i] = -1000;
@@ -560,19 +560,19 @@ boolean isHit(float ax, float ay, float aw, float ah, float bx, float by, float 
 String convertFramesToTimeString(int frames) {	// Requirement #4
   int sec = frames/60;
   int min = 0;
-  if (sec >120) {
+  if (sec >=121) {
     sec %= 60;
     min = 2;
   } else if (sec == 120) {
     sec %= 60;
     min =2;
-  } else if (sec > 60 && sec<120) {
+  } else if (sec >= 61 && sec<=119) {
     sec %= 60;
     min =1;
   } else if (sec == 60) {
     sec %= 60;
     min =1;
-  } else if (sec < 60) {
+  } else if (sec <= 59) {
     sec %= 60;
     min = 0;
   }
@@ -587,23 +587,32 @@ String convertFramesToTimeString(int frames) {	// Requirement #4
 color getTimeTextColor(int frames) {				// Requirement #5
   int sec = frames/60;
   int min = 0;
-  if (sec >120) {
-    sec -= 121;
+   if (sec >=121) {
+    sec %= 60;
     min = 2;
-  } else if (sec > 60) {
-    sec -= 61;
+  } else if (sec == 120) {
+    sec %= 60;
+    min =2;
+  } else if (sec >= 61 && sec<=119) {
+    sec %= 60;
     min =1;
-  } else if (sec <60) {
-    sec -= 1;
+  } else if (sec == 60) {
+    sec %= 60;
+    min =1;
+  } else if (sec <= 59) {
+    sec %= 60;
     min = 0;
+  }
+  if (sec <= 0) {
+    sec = 0;
   }
   if (min == 2) {
     return #00ffff;
   } else if ( min == 1 ) {
     return #ffffff;
-  } else if (min == 0 && sec >= 30) {
+  } else if (min == 0 && sec >= 31) {
     return #ffcc00;
-  } else if (min == 0 && sec <30 && sec >10) {
+  } else if (min == 0 && sec <=30 && sec >=11) {
     return #ff6600;
   } else if (min == 0 && sec <= 10) {
     return #ff0000;
